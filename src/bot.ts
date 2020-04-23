@@ -4,22 +4,37 @@ dotenv.config();
 import * as fs from "fs";
 import * as path from "path";
 
+import Chance from "chance";
 import Discord from "discord.js";
 
 interface Video {
     name: string;
     data: Buffer;
+    weight: number;
 }
 
+const chance = new Chance();
 const client = new Discord.Client();
 const videoPath = path.join(__dirname, "..", "videos");
 const videos: Video[] = [];
+const weights = {
+    "approved": 10,
+    "denied": 10,
+    "indecisive": 8,
+    "illegal": 7,
+    "failed": 5,
+    "no": 1
+};
 
 console.log("Loading videos");
 const videoFiles = fs.readdirSync(videoPath);
 for (let videoFile of videoFiles) {
     const data = fs.readFileSync(path.join(videoPath, videoFile), null);
-    videos.push({ name: path.parse(videoFile).name.toLowerCase(), data });
+    const name = path.parse(videoFile).name.toLowerCase()
+    let weight;
+    if ((weights as any)[name] !== undefined) weight = (weights as any)[name];
+    else weight = 5;
+    videos.push({ name, data, weight });
     console.log(`Loaded ${videoFile}`);
 }
 
@@ -52,13 +67,7 @@ client.on("message", (message) => {
             playVideo("failed", message.channel);
             break;
         case "rate my meme":
-            const getRandomVideo = (): Video => {
-                let video = videos[Math.floor(Math.random() * videos.length)];
-                if (video.name === "no" && Math.random() < 0.02) return getRandomVideo();
-                else return video;
-            }
-
-            let video = getRandomVideo();
+            let video = chance.weighted(videos, videos.map((video) => video.weight));
             playVideo(video.name, message.channel, "rating");
             break;
         default: break;
