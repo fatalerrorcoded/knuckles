@@ -4,6 +4,10 @@
   "main": "dist/bot.js",
   "author": "FatalErrorCoded",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fatalerrorcoded/knuckles.git"
+  },
   "dependencies": {
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0"
