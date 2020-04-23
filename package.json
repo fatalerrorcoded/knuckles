@@ -5,10 +5,12 @@
   "author": "FatalErrorCoded",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^12.2.0"
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
     "@types/node": "^13.13.2",
+    "@types/ws": "^7.2.4",
     "typescript": "^3.8.3"
   }
 }
