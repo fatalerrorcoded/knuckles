@@ -6,9 +6,14 @@ import * as path from "path";
 
 import Discord from "discord.js";
 
+interface Video {
+    name: string;
+    data: Buffer;
+}
+
 const client = new Discord.Client();
 const videoPath = path.join(__dirname, "..", "videos");
-const videos: {name: string, data: Buffer}[] = [];
+const videos: Video[] = [];
 
 console.log("Loading videos");
 const videoFiles = fs.readdirSync(videoPath);
@@ -47,7 +52,13 @@ client.on("message", (message) => {
             playVideo("failed", message.channel);
             break;
         case "rate my meme":
-            let video = videos[Math.floor(Math.random() * videos.length)];
+            const getRandomVideo = (): Video => {
+                let video = videos[Math.floor(Math.random() * videos.length)];
+                if (video.name === "no" && Math.random() < 0.02) return getRandomVideo();
+                else return video;
+            }
+
+            let video = getRandomVideo();
             playVideo(video.name, message.channel, "rating");
             break;
         default: break;
