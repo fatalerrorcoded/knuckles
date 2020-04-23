@@ -1,0 +1,14 @@
+{
+  "name": "knuckles",
+  "version": "1.0.0",
+  "main": "dist/bot.js",
+  "author": "FatalErrorCoded",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.2",
+    "typescript": "^3.8.3"
+  }
+}
