@@ -18,12 +18,13 @@ const client = new Discord.Client();
 const videoPath = path.join(__dirname, "..", "videos");
 const videos: Video[] = [];
 const weights = {
-    "approved": 10,
-    "denied": 10,
-    "indecisive": 8,
-    "illegal": 7,
-    "failed": 5,
-    "no": 1
+    "approved": 100,
+    "denied": 100,
+    "indecisive": 80,
+    "illegal": 65,
+    "failed": 40,
+    "no": 10,
+    "manbehindtheslaughter": 3,
 };
 
 console.log("Loading videos");
